@@ -488,6 +488,7 @@ import {
   // IconButton,
   FormControl,
   InputLabel,
+  Rating,
   Select,
   // MenuItem 
 } from '@mui/material';
@@ -661,10 +662,10 @@ const ReusableTable = React.memo(({
     }
     if (column.key === 'isApproved') {
       return (
-        <Grid2  xs={6}>
-          {row[column.key] ?  row['status'] === 'Present' ? (
+        <Grid2 xs={6}>
+          {row[column.key] ? row['status'] === 'Present' ? (
             <CheckCircleOutlineIcon color="success" />
-          ) :'__' : (
+          ) : '__' : (
             <CancelIcon color="error" />
           )}
         </Grid2>
@@ -686,7 +687,7 @@ const ReusableTable = React.memo(({
       return formatDate(row[column.key])
     }
     if (column.key === 'createdAt' || column.key === 'resolvedAt') {
-      return formatDate(row[column.key],'datetime')
+      return formatDate(row[column.key], 'datetime')
     }
 
 
@@ -697,6 +698,24 @@ const ReusableTable = React.memo(({
       // return row.sessions.length !== 0 && (row.sessions[row.sessions.length - 1][column.key]) || '-'
     }
 
+    if (column.key === 'averageRating') {
+      return (
+        <Rating
+          name={`rating`}
+          readOnly 
+          value={row[column.key]}
+          // onChange={(e, newValue) => handleRatingChange(reviewItem.param, newValue)}
+          precision={0.5}
+          max={5}
+          // size="large"
+          sx={{
+            '& .MuiRating-iconFilled': {
+              color: 'primary.secondary'
+            }
+          }}
+        />
+      )
+    }
     // console.log('column.key',column.key)
 
     // Determine if column.key is for a nested value (contains a dot)

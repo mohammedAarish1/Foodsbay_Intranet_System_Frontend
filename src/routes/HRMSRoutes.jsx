@@ -20,6 +20,7 @@ import ChangePassword from '../pages/auth/ChangePasswordPage';
 import LeavePoliciesPage from '../pages/modules/HRMS/LeavePoliciesPage';
 import SettingsPage from '../pages/common/SettingsPage';
 import UserAddRatingPage from '../pages/modules/USER/UserAddRatingPage';
+import UserMyPerformancePage from '../pages/modules/USER/UserMyPerformancePage';
 
 
 const HRMSRoutes = () => {
@@ -48,6 +49,7 @@ const HRMSRoutes = () => {
         <Route path="/profile/attendance-tracking" element={<Box p={4}><UserAttendancePage /></Box>} />
         <Route path="/profile/change-password" element={<Box p={4}><ChangePassword /></Box>} />
         <Route path="/performance-tracking/reveiw/performance" element={<Box p={4}><UserAddRatingPage /></Box>} />
+        <Route path="/performance-tracking/my/performance" element={<Box p={4}><UserMyPerformancePage /></Box>} />
       </Routes>
     </DashboardLayout>
   )

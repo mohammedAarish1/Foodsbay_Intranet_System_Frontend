@@ -350,11 +350,23 @@ const performanceParams = [
 ];
 
 // Generate months for selection
+// const generateMonths = () => {
+//   const months = [];
+//   for (let i = 0; i < 12; i++) {
+//     const date = new Date(0, i);
+//     months.push(date.toLocaleString('default', { month: 'long' }));
+//   }
+//   return months;
+// };
+
+
 const generateMonths = () => {
   const months = [];
+  const currentYear = new Date().getFullYear(); // Get the current year
   for (let i = 0; i < 12; i++) {
-    const date = new Date(0, i);
-    months.push(date.toLocaleString('default', { month: 'long' }));
+    const date = new Date(currentYear, i); // Set the year for each month
+    const monthYear = date.toLocaleString('default', { month: 'long' }) + ' ' + currentYear; // Format as "Month Year"
+    months.push(monthYear);
   }
   return months;
 };
@@ -371,19 +383,19 @@ const ReviewPerformanceModal = ({
   // State to manage review data
   const [reviewData, setReviewData] = useState({
     // employeeId: employeeId,
-    month: new Date().toLocaleString('default', { month: 'long' }),
-    performance: [{
-      evaluator: user ? user.employeeId:'',
+    month: new Date().toLocaleString('default', { month: 'long' }) + ' ' + new Date().getFullYear(),
+    performance: {
+      evaluator: user ? user.employeeId : '',
       reviewDate: new Date(),
       review: performanceParams.map(param => ({
         param: param,
         rating: 3,
         comment: ''
       }))
-    }]
+    }
   });
 
-  console.log('reviewDatafffff',reviewData)
+  console.log('reviewDatafffff', reviewData)
   // Handle month change
   const handleMonthChange = (event) => {
     setReviewData(prev => ({
@@ -396,14 +408,14 @@ const ReviewPerformanceModal = ({
   const handleRatingChange = (paramToUpdate, newValue) => {
     setReviewData(prev => ({
       ...prev,
-      performance: prev.performance.map(perfEntry => ({
-        ...perfEntry,
-        review: perfEntry.review.map(reviewItem =>
+      performance: {
+        ...prev.performance,
+        review: prev.performance.review.map(reviewItem =>
           reviewItem.param === paramToUpdate
             ? { ...reviewItem, rating: newValue }
             : reviewItem
         )
-      }))
+      }
     }));
   };
 
@@ -411,14 +423,14 @@ const ReviewPerformanceModal = ({
   const handleCommentsChange = (paramToUpdate, value) => {
     setReviewData(prev => ({
       ...prev,
-      performance: prev.performance.map(perfEntry => ({
-        ...perfEntry,
-        review: perfEntry.review.map(reviewItem =>
+      performance: {
+        ...prev.performance,
+        review: prev.performance.review.map(reviewItem =>
           reviewItem.param === paramToUpdate
             ? { ...reviewItem, comment: value }
             : reviewItem
         )
-      }))
+      }
     }));
   };
 
@@ -502,11 +514,12 @@ const ReviewPerformanceModal = ({
                 ))}
               </Select>
             </FormControl>
+
           </Box>
 
           {/* Performance Parameters Grid */}
           <Grid container spacing={3}>
-            {reviewData.performance[0].review.map((reviewItem) => (
+            {reviewData.performance.review.map((reviewItem) => (
               <Grid item xs={12} key={reviewItem.param}>
                 <Paper
                   elevation={1}

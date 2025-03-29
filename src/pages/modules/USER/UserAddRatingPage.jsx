@@ -65,8 +65,14 @@ const UserAddRatingPage = () => {
             // Axios or fetch to send data to backend
             console.log('reviewData', reviewData)
               const response = await api.post('/api/v1/hrms/add/performance-review', reviewData);
+              console.log('responseeeee',response.data)
+              if(response.data.success){
+                toast.success(response.data.message)
+              }
             // Handle success
         } catch (error) {
+            console.log('errorrr',error.response.data)
+            toast.error(error.response.data?.message)
             // Handle error
         }
     };

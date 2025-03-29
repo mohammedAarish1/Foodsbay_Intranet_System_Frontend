@@ -40,7 +40,7 @@ const useCustomRouter = () => {
 function DashboardLayoutBasic({ navigation, routes }) {
   const customRouter = useCustomRouter();
   const dispatch = useDispatch();
-  const navigate=useNavigate()
+  const navigate = useNavigate()
   const { user } = useSelector(state => state.auth)
 
 
@@ -55,7 +55,7 @@ function DashboardLayoutBasic({ navigation, routes }) {
 
   const [session, setSession] = React.useState({
     user: {
-      name: user?.basicInfo.firstName || '',
+      name: user?.basicInfo.firstName + ' ' + user?.basicInfo.firstName  + ' ' + (user.employeeId)  || '',
       email: user?.basicInfo.email || '',
       image: 'https://avatars.githubusercontent.com/u/19550456',
     },
